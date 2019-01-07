@@ -34,7 +34,7 @@ def fetch_data(uid=None, container_id=None):
     :return:
     """
     page = 0
-    total = 100
+    total = 110
     blogs = []
     for i in range(0, total//10):
         params['uid'] = uid
@@ -61,17 +61,20 @@ def draw_wordcloud():
         t = f.read()
     ls = jieba.lcut(t)
     txt = ' '.join(ls)
-    # mask_img = imread('2018.jpg')
+    mask_img = imread('python.png')
+    # 不在词云中显示的词语
+    word_no_show = ['第一次', '打卡', '一个', '一直', '今天', '就是', '哈哈', '一下', '不行', '他们','起床', '不错', '可以', '最后', '今日', '这道', '明早', '没有', '完成', '网易', '一起', '冻得', '分享', '希望', '现在', '感觉', '一根']
     # print(txt)
     w = wordcloud.WordCloud(
         # 指定字体为微软雅黑
-        font_path = 'MSYH.TTC',
-        # 指定词云图片的高度、宽度以及背景色
-        width=1200, height=900, background_color='white',
+        font_path = 'fzyh.ttf',
+	background_color='white',
         # 指定最大显示词数和图片样式
-        max_words=30, 
-        max_font_size = 150,
-        # mask=mask_img
+        max_words=80, 
+	stopwords = word_no_show,
+        max_font_size = 60,
+        mask=mask_img,
+	random_state = 30
                             )
     w = w.generate(txt)
     w.to_file('weibo.png')
